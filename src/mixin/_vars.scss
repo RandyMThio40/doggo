@@ -1,0 +1,36 @@
+$primary-bg-clr:#94DCE0;
+$primary-bg-clr:#F9F2F2;
+$side-padding:3rem;
+$nav-fs:1.3rem;
+
+$h3-fs:1.4rem;
+
+$card-bd-r:0.6rem;
+$card-fs:0.9rem;
+
+@keyframes skeleton{
+    from{
+        background-position: 0%;
+    }
+    to{
+        background-position: 100%;
+    }
+}
+
+@mixin skeleton{
+    background-image: linear-gradient( 90deg, gray 0%,rgb(218, 218, 218) 50%, gray 100%);
+    background-size: 500vw;
+    background-position: left;
+    animation: skeleton 2s infinite linear;
+}
+
+
+@mixin padding{
+    --sidePaddingGL:#{$side-padding};
+    @media screen and (max-width:1000px) {
+        --sidePaddingGL:1rem;
+    }
+    @media screen and (max-width:600px) {
+        --sidePaddingGL:0rem;
+    }
+}

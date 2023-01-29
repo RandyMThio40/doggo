@@ -1,0 +1,129 @@
+@use "../../mixin/vars" as gVars;
+
+:root{
+    --fs-h3:4rem;
+    @media screen and (max-width:600px){
+        --fs-h3:3rem;
+    }
+}
+
+
+
+.breedPage{
+    width:100vw;
+    height:100%;
+    .hero{
+        display: flex;
+        width:100vw;
+        height:100vh;
+        justify-content: center;
+        background-color: black;
+        overflow: hidden;
+
+        .backgroundImg{
+            $blur:5px;
+            position:absolute;
+            top:50%;
+            left:50%;
+            width:calc(100vw + ($blur * 2) );
+            height:calc(100% + ($blur * 2));
+            transform:translate(-50%,-50%);
+            object-fit: cover;
+            filter:blur($blur);
+        }
+        .mainImg{
+            min-width: calc(100vw / 5 - 10px);
+            height:100%;
+            object-fit: contain;
+            
+        }
+        h3{
+            position:absolute;
+            bottom:0;
+            left:0;
+            right:0;
+            padding:3rem gVars.$side-padding;
+            font-size: var(--fs-h3);
+            text-transform: capitalize;
+            color:white;
+            text-shadow: 1px 1px 10px rgba(0, 0, 0,1);
+            
+        }
+
+    }
+    @keyframes skeleton{
+        from{
+            background-position: 0%;
+        }
+        to{
+            background-position: 100%;
+        }
+    }
+    
+    .mainContent{
+        width:100vw;
+        padding:var(--sidePaddingGL);
+        .skeletonH4,
+        h4{
+            width:100%;
+            font-size:3rem;
+            text-transform: capitalize;
+            margin-bottom:2rem;
+        }
+        .skeletonH4{
+            color:transparent;
+            @include gVars.skeleton;
+        }
+        .skeleton,
+        .breedSection{
+            --gap:0.6rem;
+            --quantity:6;
+            --dimensions:calc((100vw - ((var(--sidePaddingGL) * 2) + (var(--gap) * (var(--quantity) - 1)))) / var(--quantity));
+            display: flex;
+            flex-wrap: wrap;
+            gap:var(--gap);
+            img{
+                width:var(--dimensions);
+                height:var(--dimensions);
+                object-fit: cover;
+                cursor: pointer;
+                @include gVars.skeleton;
+                &:hover{
+
+                    filter:brightness(70%)
+                }
+            }
+        }
+        @media screen and (max-width:1000px){
+            .skeleton,
+            .breedSection{
+                --quantity:4;
+            }
+        }
+
+        @media screen and (max-width:650px){
+            .skeleton,
+            .breedSection{
+                --quantity:3;
+            }
+            h4{
+                font-size:2rem;
+            }
+        }
+        
+        @media screen and (max-width:500px){
+            .skeleton,
+            .breedSection{
+                --quantity:2;
+            }
+        }
+        @media screen and (max-width:350px){
+            .skeleton,
+            .breedSection{
+                --quantity:1;
+            }
+        }
+
+    }
+
+}

@@ -1,0 +1,20 @@
+@use '../../mixin/_vars.scss' as gVars;
+
+
+.about{
+    --padding:#{gVars.$side-padding};
+
+    width:100vw;
+    height:100%;
+    padding: calc(1.5rem + var(--navHeight)) var(--sidePaddingGL);
+    font-size:1.2rem;
+}
+
+.header{
+    font-size:2em;
+}
+
+
+.description{
+    font-size:1em;
+}

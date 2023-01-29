@@ -1,0 +1,266 @@
+@use '../../mixin/_vars.scss' as gVars;
+
+
+
+.navbar{
+    position: fixed;
+    top:0px;
+    display: flex;
+    align-items: center;
+    width:100vw;
+    font-size: gVars.$nav-fs;
+    z-index: 99999;
+    height: min-content;
+}
+
+.default,
+.alternate{
+    width:100vw;
+    padding:1.1rem var(--sidePaddingGL);
+    justify-content: space-between;
+}
+
+.alternate{
+    position:absolute;
+    height: 0;
+    top:0;
+    display: flex;
+    align-items: center;
+    transform:translateY(-100%);
+    visibility: hidden;
+    .backArrow{
+        position:absolute;
+        top:2.1rem;
+        left:var(--sidePaddingGL);
+        width:3rem;
+        filter:drop-shadow(0 0 2px rgba(0, 0, 0, 0.8));
+        vertical-align: bottom;
+        transition: filter 200ms ease;
+        cursor: pointer;
+        &:hover{
+            filter:drop-shadow(0 0 5px rgba(0, 0, 0, 0.8));
+        }
+    }
+    a{  
+        display: inline-block;
+        height: min-content;
+    }
+    .iconList{
+        position: absolute;
+        top:1.1rem;
+        right:var(--sidePaddingGL);
+        display: flex;
+        list-style: none;
+        gap:4rem;
+        li{
+            transform:translateY(calc(-100% - 1.1rem));
+            opacity: 0;
+            cursor: pointer;
+            overflow: hidden;
+            border-radius:50%;
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
+        }
+        img{
+            width:4rem;
+            vertical-align: bottom;
+            transition: transform 200ms ease-in-out;
+            &:hover{
+                transform: scale(1.4);
+
+            }
+            
+        }
+    }
+    @media screen and (max-width:600px){
+        align-items: flex-start;
+        padding: 1.1rem 1.5rem;
+        .iconList{
+            flex-direction: column;
+            gap:1.5rem;
+        }
+    }
+}
+
+.default{
+    position: absolute;
+    top:0;
+    display: flex;
+    align-items: center;
+    width:100%;
+    padding:1.1rem var(--sidePaddingGL);
+    background-color: gVars.$primary-bg-clr;
+    border-bottom:2px solid black;
+}
+
+.icon{
+    
+}
+
+.navLinks{
+    display: flex;
+    gap:5vw;
+    list-style: none;
+    
+    .link{
+        $link-trans-ms:300ms;
+        width:max-content;
+        position:relative;
+        opacity: 0.6;
+        transition:opacity ease-in-out $link-trans-ms;
+        cursor: pointer;
+        & > * {
+            text-decoration: none;
+            color:inherit;
+        }
+        &::after{
+            content:"";
+            position:absolute;
+            top:100%;
+            left:0;
+            width:100%;
+            height:0.2rem;
+            background-color: black;
+            border-radius: 0.2rem;
+            transform-origin:left;
+            transform:scaleX(0);
+            transition:transform ease-in-out $link-trans-ms,
+        }
+        &.active,
+        &:hover{
+            &::after{
+                transform:scaleX(1);
+            }
+            opacity: 1;
+        }
+        &:last-child{
+            display: none;
+        }
+
+    }
+}
+
+.random{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:0.5rem;
+    padding:0.5rem 1.5rem;
+    border-radius: 0.2rem;
+    font-size: inherit;
+    border:1px solid black;
+    border-radius: 0.2rem;
+    background-color:adjust-color($color: gVars.$primary-bg-clr, $hue: 1, $saturation: 10%, $lightness: 10%, $alpha: 1.0);
+    box-shadow: 2px 3px 5px 1px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: box-shadow linear 200ms,
+                opacity linear 200ms;
+    &:hover{
+        opacity: 0.8;
+    }
+    &:active{
+        box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.5);
+
+    }
+}
+
+.burger{
+    display: none;
+}
+
+@media screen and (max-width:600px){
+    .default{
+        padding: 1.1rem var(--sidePaddingGL);
+        &.active{
+            .burger{
+                &::before{
+                    top:50%;
+                    transform:translateY(-50%) rotate(45deg);
+                }   
+                &::after{
+                    bottom:50%;
+                    transform:translateY(50%) rotate(-45deg);
+
+                }
+            }
+            .navLinks{
+                display: flex;
+                height:100vh;
+                transform:scaleY(1);
+                transition: height 500ms ease;
+            }
+        }
+    }
+    .icon{
+        // position: absolute;
+        // top: calc(var(--navHeight) / 2);
+        // transform:translateY(-50%);
+    }
+    .navLinks{
+        transform:scaleY(0);
+        --spacing:2rem;
+        position: absolute;
+        top:calc(100% + 2px);
+        left:0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding:var(--spacing) 0;
+        gap:var(--spacing);
+        width:100vw;
+        height:0px;
+        text-align: center;
+        color:black;
+        background-color: gVars.$primary-bg-clr;
+        overflow: scroll;
+        svg{
+            fill: black;
+        }
+        .link{
+            opacity: 1;
+            &:last-child{
+                display: flex;
+                gap:0.6rem;
+                align-items: center;
+            }
+        }
+    }
+    .random{
+        display: none;
+    }
+    .burger{
+        --padding:0.5rem;
+        display:flex;
+        border:none;
+        background-color:transparent;
+        flex-direction: column;
+        padding:var(--padding);
+        gap:var(--padding);
+        
+        &::before,
+        &::after,
+        div{
+            height:3px;
+            width:2.5rem;
+        }
+        &::before,
+        &::after{
+            content:"";
+            position: absolute;
+            top:var(--padding);
+            background-color: black;
+            border-radius:0.1rem;
+            z-index: 1;
+            transition: top 400ms ease,
+                        bottom 400ms ease,
+                        transform 200ms  ease;
+        }
+        &::after{
+            top:unset;
+            bottom:var(--padding);
+        }
+
+
+
+
+    }
+}

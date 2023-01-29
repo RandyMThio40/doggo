@@ -1,0 +1,139 @@
+@use "./mixin/_vars.scss" as gVars;
+
+
+:root{
+    --sidePaddingGL:#{gVars.$side-padding};
+}
+
+@media screen and (max-width:600px) {
+    :root{
+        --sidePaddingGL:1rem;
+    }
+    
+}
+
+html,body{
+    background-color: gVars.$primary-bg-clr;
+}
+
+.App{
+    font-family: Inter,sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+
+    width:100vw;
+    height:100%;
+    background-color: inherit;
+    overflow: hidden;
+}
+
+
+
+.flipCont{
+    display:flex;
+    justify-content:space-between;
+    width:100vw;
+}
+.square2,
+.square{
+    display: flex;
+    align-items:center;
+    justify-content:center;
+    width:100px;
+    aspect-ratio: 1/1;
+    background-color: green;
+
+}
+
+.growCont{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:50vw;
+    height:50vw;
+    border:1px solid black;
+}
+
+.small,
+.big{
+
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    width:100px;
+    aspect-ratio: 1/1;
+    background-color:red;
+}
+.big{
+    display:none;
+    background-color: blue;
+    width:100%;
+    height:100%;
+}
+
+.big.active{
+    display: flex;
+}
+
+.small.active{
+    visibility: hidden;
+}
+
+.small,.small.flipping{
+    visibility: visible;
+}
+
+.top{
+    position:fixed;
+    bottom:1rem;
+    right:1rem;
+    width:5rem;
+    height:5rem;
+    background-color:white;
+    border:none;
+    border-radius:50%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    transition: box-shadow 200ms ease-in-out;
+    z-index: 9999;
+    cursor:pointer;
+    &:hover{
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+
+    }
+}
+
+.box1{
+    width:100px;
+    height:100px;
+    background-color: red;
+    visibility: visible;
+}
+
+.box2{
+    display: none;
+    width:200px;
+    height:200px;
+    background-color: blue;
+}
+
+
+.box1.active{
+    visibility: hidden;
+}
+.box2.active{
+    display: block;
+}
+
+.box1.flipped{
+    visibility: visible;
+}
+
+
+
+
+@media (prefers-color-scheme: dark) {
+   
+    
+}
