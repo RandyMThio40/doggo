@@ -247,6 +247,10 @@ export function Home(){
         window.history.pushState({},'')
     },[])
 
+    useEffect(()=>{
+
+    },[])
+
     return(
         <section className={styles.home}>
             <main className={styles.mainContent}>

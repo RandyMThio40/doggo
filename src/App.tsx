@@ -12,6 +12,7 @@ import CustomEase from 'gsap/CustomEase';
 import Gallery from './components/gallery/gallery';
 import About from './components/about/about';
 import Faqs from './components/faqs/faqs';
+import BreedListProvider from './components/breedsListContext/breedListContext';
 
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -22,8 +23,6 @@ gsap.registerPlugin(Flip,ScrollToPlugin,CustomEase,ScrollTrigger);
 
 
 function Layout() {
-  const {id} = useParams();
-
   return(
     <>
       <Nav/>

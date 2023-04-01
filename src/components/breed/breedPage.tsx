@@ -14,10 +14,8 @@ gsap.registerPlugin(ScrollToPlugin);
 export function BreedPage(){
     const {id} = useParams();
     const imgUrl = useRef<string|undefined>(breedList.find(findId)?.imgUrl)!
-    const [breeds,setBreeds] = useState<Breed[][]>([]);
-    const [subBreeds,setSubBreeds] = useState<string[]>([]);
-    const navigate = useNavigate()
-
+    const [breeds,setBreeds] = useState<Breed[]>([]);
+    const navigate = useNavigate();
   
     function findId(obj:Breed){
       return obj.breed === id
@@ -39,29 +37,33 @@ export function BreedPage(){
     
   
     useEffect(()=>{
+
+      const getSubBreed = (url:string,breed:string):string => {
+        let subBreed:string = breed; 
+        let pos = 30+breed.length;
+        if(url.at((pos))==='-'){
+          subBreed = url.substring((pos+1),url.indexOf("/",pos))
+        }
+        return subBreed 
+      }
       const initData = async() => {
+        if(!id) return;
         try{
-          const subBreeds = await fetch(`https://dog.ceo/api/breed/${id}/list`).then((e)=>e.json())
-          const arr:Breed[][] = Array.from(Array(subBreeds.message[`${id}`].length|1),()=>[])
-          if(subBreeds.message[`${id}`].length){
-            for(let i = 0; i < subBreeds.message[`${id}`].length; i++){
-              const data = await fetch(`https://dog.ceo/api/breed/${id}/${subBreeds.message[`${id}`][i]}/images`).then((e)=>e.json())
-              arr[i]?.push(...data.message.map((url:string)=>{return {breed:subBreeds.message[`${id}`][i],imgUrl:url}}))
-            }
-          }
-          else{
-            const data = await fetch(`https://dog.ceo/api/breed/${id}/images`).then((e)=>e.json())
-            arr[0]?.push(...data.message.map((url:string)=>{return {breed:`${id}`,imgUrl:url}}))
-          }
-          setSubBreeds(subBreeds.message[`${id}`])
-          setBreeds(arr);
+          const data = await fetch(`https://dog.ceo/api/breed/${id}/images`).then((e)=>e.json())
+          let list:Breed[] = data.message.map((url:string,idx:number)=>{
+            return {
+              breed:getSubBreed(url,id),
+              imgUrl:url,
+            } as Breed
+          })
+          setBreeds(list);
+          
         }catch(err){
           console.error(err);
         }
       }
       initData();
     },[])
-
     return(
       <section className={styles.breedPage}>
         <div className={styles.hero}>
@@ -70,39 +72,38 @@ export function BreedPage(){
           <h3>{id}</h3>
         </div>
         <main className={styles.mainContent}>
+          <section className={styles.breedSection}>
             {
-              (breeds.length)
-              ?
-              breeds.map((array,idx)=>{
-                return(
-                  <React.Fragment key={idx}>
-                    <h4>{subBreeds.length ? subBreeds[idx] : id}</h4>
-                    <section className={styles.breedSection} key={idx}>
-                      {
-                        array.map((obj:Breed,idx)=>{
-                        return(
-                            <img key={idx} src={obj.imgUrl} onClick={()=>{navigate(`${idx+1}`)}}/>
-                        )
-                        })
-                      }
-                    </section>
-                  </React.Fragment>
-                )
-              })
+              breeds.length ?
+                breeds.map((obj:Breed,idx:number)=>{
+
+                  return(
+                    <React.Fragment key={idx}>
+                      {(idx === 0 || obj.breed !== breeds[idx-1].breed) ? <h4>{obj.breed}</h4> : null}
+                      <img src={obj.imgUrl} onError={(e)=>{e.currentTarget.remove();
+                                  // setBreeds((prev)=>{
+                                  //   console.log(prev)
+                                  //   return prev.filter((val,index)=>index !== index2)
+                                  // })
+                                }} onClick={()=>{navigate(`${idx+1}`)}}/>
+                    </React.Fragment>
+                  )
+                })
               :
-              <React.Fragment>
-                <h4 className={styles.skeletonH4}>breed</h4>
-                <div className={styles.skeleton}>
-                  {
-                    Array.from(Array(20)).map((item,idx)=>{
-                      return(<img key={idx}/>)
-                    })
-                  }
-                </div>
-              </React.Fragment>
+                <React.Fragment>  
+                  <h4 className={styles.skeletonH4}>breed</h4>
+                  <div className={styles.skeleton}>
+                    {
+                      Array.from(Array(20)).map((item,idx)=>{
+                        return(<img key={idx} alt=""/>)
+                      })
+                    }
+                  </div>
+                </React.Fragment>
             }
+          </section>
         </main>
-          <Outlet context={breeds}/>
+        <Outlet context={breeds}/>
       </section>
     )
   }

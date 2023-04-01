@@ -7,7 +7,7 @@ import styles from './gallery.module.scss';
 export const Gallery = () => {
     const navigate = useNavigate();
     const {id,index} = useParams();
-    const [breed] = useOutletContext<Breed[][]>();
+    const [...breed] = useOutletContext<Breed[]>();
     
     
     const handleNavigate = (dir:number) => {
@@ -35,8 +35,10 @@ export const Gallery = () => {
         return () => {document.body.style.overflow = "";}
     },[])
     
-    if(breed === undefined|| index === undefined ) return <section style={{display:"flex",alignItems:"center",justifyContent:"center"}} className={styles.gallery}><p style={{color:"white"}}>loading Media</p></section>
-    if(breed[parseInt(index)-1] === undefined) return <section style={{display:"flex",alignItems:"center",justifyContent:"center"}} className={styles.gallery}><p style={{color:"white"}}>Index out of Bounds</p></section>
+    if(breed.length === 0 || index === undefined ) return <section style={{display:"flex",alignItems:"center",justifyContent:"center"}} className={styles.gallery}><p style={{color:"white"}}>loading Media</p></section>
+    else if( breed[parseInt(index)-1] === undefined) return <section style={{display:"flex",alignItems:"center",justifyContent:"center"}} className={styles.gallery}><p style={{color:"white"}}>Index out of Bounds</p></section>
+    
+
     return(
         <section className={styles.gallery}>
             <img src={breed[parseInt(index)-1].imgUrl}/>
