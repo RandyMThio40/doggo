@@ -12,7 +12,6 @@ import CustomEase from 'gsap/CustomEase';
 import Gallery from './components/gallery/gallery';
 import About from './components/about/about';
 import Faqs from './components/faqs/faqs';
-import BreedListProvider from './components/breedsListContext/breedListContext';
 
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -107,9 +106,6 @@ function FlipComp() {
     
     t1.current = t2
     t1.current.play()
-  
-    console.log("play")
-
   },[])
 
   return(

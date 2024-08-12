@@ -138,7 +138,7 @@ export function Home(){
         if(history.state?.from === undefined) return;
         const prevId = history.state?.from.toLowerCase()
         
-        const findObj = (item:Breed,idx:number) => {
+        const findObj = (item:Breed) => {
             return item.breed === prevId;
         }
         
@@ -152,17 +152,13 @@ export function Home(){
         if(breedObj === undefined) return;
         const imgSrc: string = breedObj.imgUrl;
         const target:HTMLDivElement = document.querySelector(`#${prevId}`)!;
-       
 
-        console.log("cliengt height: ",window.innerHeight,target,(window.innerHeight - target.getBoundingClientRect().height )/2)
+        // console.log("cliengt height: ",window.innerHeight,target,(window.innerHeight - target.getBoundingClientRect().height )/2)
         
         if(target === null) return;
         document.body.style.overflow = "hidden";
 
-
-        
         backImage.classList.add(styles.backgroundImg)
-        
         
         backImage.setAttribute("src",imgSrc);
         image.classList.add(styles.hero);
@@ -191,12 +187,9 @@ export function Home(){
                 scrollTo:{
                     y:target,
                     offsetY:( window.innerHeight - target.getBoundingClientRect().height ) / 2
-                    
                 }
             })
-            console.log("start: ",target.getBoundingClientRect())
-
-
+            // console.log("start: ",target.getBoundingClientRect())
         }
             
         const handleComplete = () => {
@@ -245,10 +238,6 @@ export function Home(){
 
 
         window.history.pushState({},'')
-    },[])
-
-    useEffect(()=>{
-
     },[])
 
     return(

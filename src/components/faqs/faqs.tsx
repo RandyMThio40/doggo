@@ -14,11 +14,11 @@ export const Faqs = () => {
             <h2 className={styles.header}>FAQs</h2>
             <div className={styles.question}>
                     <h4>Where did you get the pictures of dogs?</h4>
-                    <p>I used an api that collected dog pictures at <Link to="https://dog.ceo/dog-api">www.dog.ceo</Link>. </p>
+                    <p>I used an api that collected dog pictures at <a href="https://dog.ceo/dog-api">www.dog.ceo</a>. </p>
             </div>
             <div className={styles.question}>
                 <h4>How can I submit my dog's picture?</h4>
-                <p>You can submit your dog's picture at <Link to="https://github.com/jigsawpieces/dog-api-images#dog-api-images">their github</Link></p>
+                <p>You can submit your dog's picture at <a href="https://github.com/jigsawpieces/dog-api-images#dog-api-images">their github</a></p>
             </div>
         </div>
     )
